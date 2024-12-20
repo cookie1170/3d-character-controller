@@ -13,9 +13,6 @@ class_name Player
 @export var decel_time_sec : float
 
 ## math
-@onready var jump_velocity : float = (2.0 * jump_height) / peak_time_sec
-@onready var jump_grav : float = (-2.0 * jump_height) / (peak_time_sec ** 2)
-@onready var fall_grav : float = (-2.0 * jump_height) / (fall_time_sec ** 2)
 @onready var accel : float = move_speed / accel_time_sec
 @onready var decel : float = move_speed / decel_time_sec
 
@@ -58,12 +55,6 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, decel * delta)
 		velocity.z = move_toward(velocity.z, 0, decel * delta)
-	## handles gravity
-	if not is_on_floor():
-		_apply_gravity(delta)
-	## handles the jump
-	if Input.is_action_just_pressed("jump") and _can_jump():
-		_jump()
 
 	move_and_slide()
 
@@ -80,16 +71,3 @@ func _get_move_dir() -> Vector2:
 	move_dir = move_dir.normalized()
 
 	return Vector2(move_dir.x, move_dir.z)
-
-func _apply_gravity(delta : float) -> void:
-	velocity.y += _get_grav() * delta
-
-func _jump() -> void:
-	velocity.y = jump_velocity
-
-func _can_jump() -> bool:
-	# temp
-	return is_on_floor()
-
-func _get_grav() -> float:
-	return jump_grav if velocity.y > 0 else fall_grav
