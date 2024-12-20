@@ -8,7 +8,13 @@
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_2ty25")
-jump_velocity = 4.0
+jump_height = 1.5
+peak_time_sec = 0.35
+fall_time_sec = 0.25
+terminal_velocity = 16.0
+move_speed = 8.0
+accel_time_sec = 0.2
+decel_time_sec = 0.1
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

@@ -2,12 +2,24 @@ extends CharacterBody3D
 class_name Player
 
 @export_range(0.1, 2.0) var sensitivity : float = 0.5
-@export var jump_velocity : float = 2.0
-@export var gravity : float = -9.8
-@export var move_speed : float = 8.0
-@export var accel_time : float = 0.15
+## movement variable exports
+@export_group("Movement variables")
+@export var jump_height : float
+@export var peak_time_sec : float
+@export var fall_time_sec : float
+@export var terminal_velocity : float
+@export var move_speed : float
+@export var accel_time_sec : float
+@export var decel_time_sec : float
 
-@onready var accel : float = move_speed / accel_time
+## math
+@onready var jump_velocity : float = (2.0 * jump_height) / peak_time_sec
+@onready var jump_grav : float = (-2.0 * jump_height) / (peak_time_sec ** 2)
+@onready var fall_grav : float = (-2.0 * jump_height) / (fall_time_sec ** 2)
+@onready var accel : float = move_speed / accel_time_sec
+@onready var decel : float = move_speed / decel_time_sec
+
+## nodes
 @onready var camera: Camera3D = %Camera
 
 var camera_input_dir := Vector2.ZERO
@@ -40,8 +52,12 @@ func _physics_process(delta: float) -> void:
 
 	var move_dir = _get_move_dir()
 	## accelerates the velocity towards the move direction
-	velocity.x = move_toward(velocity.x, move_dir.x * move_speed, accel * delta)
-	velocity.z = move_toward(velocity.z, move_dir.y * move_speed, accel * delta)
+	if move_dir:
+		velocity.x = move_toward(velocity.x, move_dir.x * move_speed, accel * delta)
+		velocity.z = move_toward(velocity.z, move_dir.y * move_speed, accel * delta)
+	else:
+		velocity.x = move_toward(velocity.x, 0, decel * delta)
+		velocity.z = move_toward(velocity.z, 0, decel * delta)
 	## handles gravity
 	if not is_on_floor():
 		_apply_gravity(delta)
@@ -66,7 +82,7 @@ func _get_move_dir() -> Vector2:
 	return Vector2(move_dir.x, move_dir.z)
 
 func _apply_gravity(delta : float) -> void:
-	velocity.y += gravity * delta
+	velocity.y += _get_grav() * delta
 
 func _jump() -> void:
 	velocity.y = jump_velocity
@@ -74,3 +90,6 @@ func _jump() -> void:
 func _can_jump() -> bool:
 	# temp
 	return is_on_floor()
+
+func _get_grav() -> float:
+	return jump_grav if velocity.y > 0 else fall_grav
