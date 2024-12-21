@@ -7,6 +7,8 @@ class_name Player
 @export var jump_height : float
 @export var peak_time_sec : float
 @export var fall_time_sec : float
+@export var hang_time : float
+@export var hang_vel_mult : float
 @export var terminal_velocity : float
 @export var move_speed : float
 @export var accel_time_sec : float
@@ -20,6 +22,9 @@ class_name Player
 @onready var camera: Camera3D = %Camera
 
 var camera_input_dir := Vector2.ZERO
+
+func _ready() -> void:
+	%HangTimer.wait_time = hang_time
 
 func _input(event: InputEvent) -> void:
 	## lets you focus in and out of the window
@@ -78,3 +83,4 @@ func recalculate_movement() -> void:
 	decel = move_speed / decel_time_sec
 	$StateMachine/Jumping.recalculate_movement()
 	$StateMachine/Falling.recalculate_movement()
+	%HangTimer.wait_time = hang_time

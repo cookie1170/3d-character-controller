@@ -157,17 +157,55 @@ value = 0.05
 script = ExtResource("5_ic6ij")
 player_var_name = "fall_time_sec"
 
-[node name="VBoxContainer4" type="VBoxContainer" parent="CanvasLayer/VBoxContainer"]
+[node name="VBoxContainer4" type="VBoxContainer" parent="CanvasLayer/VBoxContainer/VBoxContainer3"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/VBoxContainer4" node_paths=PackedStringArray("h_slider")]
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/VBoxContainer3/VBoxContainer4" node_paths=PackedStringArray("h_slider")]
 layout_mode = 2
-text = "Move Speed"
+text = "Hang time (sec)"
 script = ExtResource("4_v0u4u")
-text1 = "Move Speed"
+text1 = "Hang time (sec)"
 h_slider = NodePath("../HSlider")
 
-[node name="HSlider" type="HSlider" parent="CanvasLayer/VBoxContainer/VBoxContainer4"]
+[node name="HSlider" type="HSlider" parent="CanvasLayer/VBoxContainer/VBoxContainer3/VBoxContainer4"]
+layout_mode = 2
+min_value = 0.05
+max_value = 1.0
+step = 0.05
+value = 0.05
+script = ExtResource("5_ic6ij")
+player_var_name = "hang_time"
+
+[node name="VBoxContainer5" type="VBoxContainer" parent="CanvasLayer/VBoxContainer/VBoxContainer3"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/VBoxContainer3/VBoxContainer5" node_paths=PackedStringArray("h_slider")]
+layout_mode = 2
+text = "Hang velocity mult"
+script = ExtResource("4_v0u4u")
+text1 = "Hang velocity mult"
+h_slider = NodePath("../HSlider")
+
+[node name="HSlider" type="HSlider" parent="CanvasLayer/VBoxContainer/VBoxContainer3/VBoxContainer5"]
+layout_mode = 2
+min_value = 1.0
+max_value = 3.0
+step = 0.25
+value = 1.0
+script = ExtResource("5_ic6ij")
+player_var_name = "hang_vel_mult"
+
+[node name="VBoxContainer6" type="VBoxContainer" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/VBoxContainer6" node_paths=PackedStringArray("h_slider")]
+layout_mode = 2
+text = "Move speed"
+script = ExtResource("4_v0u4u")
+text1 = "Move speed"
+h_slider = NodePath("../HSlider")
+
+[node name="HSlider" type="HSlider" parent="CanvasLayer/VBoxContainer/VBoxContainer6"]
 layout_mode = 2
 min_value = 0.5
 max_value = 16.0
@@ -176,17 +214,17 @@ value = 0.5
 script = ExtResource("5_ic6ij")
 player_var_name = "move_speed"
 
-[node name="VBoxContainer5" type="VBoxContainer" parent="CanvasLayer/VBoxContainer"]
+[node name="VBoxContainer7" type="VBoxContainer" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/VBoxContainer5" node_paths=PackedStringArray("h_slider")]
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/VBoxContainer7" node_paths=PackedStringArray("h_slider")]
 layout_mode = 2
 text = "Acceleration (sec)"
 script = ExtResource("4_v0u4u")
 text1 = "Acceleration (sec)"
 h_slider = NodePath("../HSlider")
 
-[node name="HSlider" type="HSlider" parent="CanvasLayer/VBoxContainer/VBoxContainer5"]
+[node name="HSlider" type="HSlider" parent="CanvasLayer/VBoxContainer/VBoxContainer7"]
 layout_mode = 2
 min_value = 0.05
 max_value = 1.0
@@ -195,17 +233,17 @@ value = 0.05
 script = ExtResource("5_ic6ij")
 player_var_name = "accel_time_sec"
 
-[node name="VBoxContainer6" type="VBoxContainer" parent="CanvasLayer/VBoxContainer"]
+[node name="VBoxContainer8" type="VBoxContainer" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/VBoxContainer6" node_paths=PackedStringArray("h_slider")]
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/VBoxContainer8" node_paths=PackedStringArray("h_slider")]
 layout_mode = 2
 text = "Deceleration (sec)"
 script = ExtResource("4_v0u4u")
 text1 = "Deceleration (sec)"
 h_slider = NodePath("../HSlider")
 
-[node name="HSlider" type="HSlider" parent="CanvasLayer/VBoxContainer/VBoxContainer6"]
+[node name="HSlider" type="HSlider" parent="CanvasLayer/VBoxContainer/VBoxContainer8"]
 layout_mode = 2
 min_value = 0.05
 max_value = 1.0
@@ -214,17 +252,17 @@ value = 0.05
 script = ExtResource("5_ic6ij")
 player_var_name = "decel_time_sec"
 
-[node name="VBoxContainer7" type="VBoxContainer" parent="CanvasLayer/VBoxContainer"]
+[node name="VBoxContainer9" type="VBoxContainer" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/VBoxContainer7" node_paths=PackedStringArray("h_slider")]
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/VBoxContainer9" node_paths=PackedStringArray("h_slider")]
 layout_mode = 2
 text = "Sensitivity"
 script = ExtResource("4_v0u4u")
 text1 = "Sensitivity"
 h_slider = NodePath("../HSlider")
 
-[node name="HSlider" type="HSlider" parent="CanvasLayer/VBoxContainer/VBoxContainer7"]
+[node name="HSlider" type="HSlider" parent="CanvasLayer/VBoxContainer/VBoxContainer9"]
 layout_mode = 2
 min_value = 0.05
 max_value = 1.0

@@ -15,10 +15,6 @@ run/main_scene="res://levels/level.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
 config/icon="res://icon.svg"
 
-[display]
-
-window/size/always_on_top=true
-
 [input]
 
 focus_click={
