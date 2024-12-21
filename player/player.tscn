@@ -12,11 +12,11 @@
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_2ty25")
-jump_height = 1.5
+jump_height = 3.0
 peak_time_sec = 0.35
 fall_time_sec = 0.25
 terminal_velocity = 16.0
-move_speed = 8.0
+move_speed = 12.0
 accel_time_sec = 0.2
 decel_time_sec = 0.1
 
@@ -31,6 +31,11 @@ shape = SubResource("CapsuleShape3D_8ii4w")
 [node name="Camera" type="Camera3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="CoyoteTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.1
+one_shot = true
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("default_state")]
 script = ExtResource("2_jafdf")

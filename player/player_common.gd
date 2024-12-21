@@ -71,3 +71,10 @@ func _get_move_dir() -> Vector2:
 	move_dir = move_dir.normalized()
 
 	return Vector2(move_dir.x, move_dir.z)
+
+
+func recalculate_movement() -> void:
+	accel = move_speed / accel_time_sec
+	decel = move_speed / decel_time_sec
+	$StateMachine/Jumping.recalculate_movement()
+	$StateMachine/Falling.recalculate_movement()

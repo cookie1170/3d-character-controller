@@ -16,3 +16,7 @@ func _physics_process(delta: float) -> void:
 		emit_signal("state_changed", grounded_state)
 	if owner.velocity.y <= 0:
 		emit_signal("state_changed", falling_state)
+
+func recalculate_movement() -> void:
+	jump_velocity = (2.0 * owner.jump_height) / owner.peak_time_sec
+	grav = (-2.0 * owner.jump_height) / (owner.peak_time_sec ** 2)
