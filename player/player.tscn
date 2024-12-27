@@ -17,6 +17,8 @@ peak_time_sec = 0.3
 fall_time_sec = 0.25
 hang_time = 0.1
 hang_vel_mult = 1.5
+hang_grav_mult = 0.5
+coyote_time = 0.1
 terminal_velocity = 16.0
 move_speed = 12.0
 accel_time_sec = 0.15
@@ -64,6 +66,6 @@ jumping_state = NodePath("../Jumping")
 grounded_state = NodePath("../Grounded")
 
 [connection signal="state_changed" from="StateMachine/Grounded" to="StateMachine" method="_change_state"]
+[connection signal="jump_cut" from="StateMachine/Jumping" to="StateMachine/Falling" method="_on_jump_cut"]
 [connection signal="state_changed" from="StateMachine/Jumping" to="StateMachine" method="_change_state"]
-[connection signal="buffered_jump" from="StateMachine/Falling" to="StateMachine/Grounded" method="_on_buffered_jump"]
 [connection signal="state_changed" from="StateMachine/Falling" to="StateMachine" method="_change_state"]

@@ -9,6 +9,8 @@ class_name Player
 @export var fall_time_sec : float
 @export var hang_time : float
 @export var hang_vel_mult : float
+@export var hang_grav_mult : float
+@export var coyote_time : float
 @export var terminal_velocity : float
 @export var move_speed : float
 @export var accel_time_sec : float
@@ -84,3 +86,4 @@ func recalculate_movement() -> void:
 	$StateMachine/Jumping.recalculate_movement()
 	$StateMachine/Falling.recalculate_movement()
 	%HangTimer.wait_time = hang_time
+	%CoyoteTimer.wait_time = coyote_time

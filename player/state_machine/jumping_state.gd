@@ -1,5 +1,7 @@
 extends State
 
+signal jump_cut
+
 @export var grounded_state : State
 @export var falling_state : State
 
@@ -17,7 +19,8 @@ func _physics_process(delta: float) -> void:
 	if owner.velocity.y <= 0:
 		emit_signal("state_changed", falling_state)
 	if Input.is_action_just_released("jump"):
-		owner.velocity.y -= 2.5
+		owner.velocity.y -= 4
+		emit_signal("jump_cut")
 		emit_signal("state_changed", falling_state)
 
 func recalculate_movement() -> void:
