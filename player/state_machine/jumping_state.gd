@@ -8,8 +8,8 @@ signal jump_cut
 @onready var jump_velocity : float = (2.0 * owner.jump_height) / owner.peak_time_sec
 @onready var grav : float = (-2.0 * owner.jump_height) / (owner.peak_time_sec ** 2)
 
-func enter(previous_state : State) -> void:
-	super(previous_state)
+func enter(previous_state : State = null) -> void:
+	super()
 	owner.velocity.y = jump_velocity
 
 func _physics_process(delta: float) -> void:

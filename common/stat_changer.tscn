@@ -1,0 +1,224 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4wn1ytn4dbnv"]
+
+[ext_resource type="Script" path="res://common/stat_changer_label.gd" id="1_76ncq"]
+[ext_resource type="Script" path="res://common/stat_changer_slider.gd" id="2_nqfxv"]
+
+[node name="StatChanger" type="CanvasLayer"]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_right = 283.0
+offset_bottom = 404.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer" node_paths=PackedStringArray("h_slider")]
+layout_mode = 2
+text = "Jump height
+"
+script = ExtResource("1_76ncq")
+text1 = "Jump height %s m"
+h_slider = NodePath("../HSlider")
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2
+min_value = 0.5
+max_value = 10.0
+step = 0.5
+value = 0.5
+script = ExtResource("2_nqfxv")
+player_var_name = "jump_height"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("h_slider")]
+layout_mode = 2
+text = "Time to jump peak
+"
+script = ExtResource("1_76ncq")
+text1 = "Time to jump peak %s sec"
+h_slider = NodePath("../HSlider")
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/VBoxContainer2"]
+layout_mode = 2
+min_value = 0.05
+max_value = 1.0
+step = 0.05
+value = 0.05
+script = ExtResource("2_nqfxv")
+player_var_name = "peak_time_sec"
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer3" node_paths=PackedStringArray("h_slider")]
+layout_mode = 2
+text = "Time to fall from peak"
+script = ExtResource("1_76ncq")
+text1 = "Time to fall from peak %s sec"
+h_slider = NodePath("../HSlider")
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/VBoxContainer3"]
+layout_mode = 2
+min_value = 0.05
+max_value = 1.0
+step = 0.05
+value = 0.05
+script = ExtResource("2_nqfxv")
+player_var_name = "fall_time_sec"
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer4" node_paths=PackedStringArray("h_slider")]
+layout_mode = 2
+text = "Hang time (sec)"
+script = ExtResource("1_76ncq")
+text1 = "Hang time %s sec"
+h_slider = NodePath("../HSlider")
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/VBoxContainer4"]
+layout_mode = 2
+min_value = 0.05
+max_value = 1.0
+step = 0.05
+value = 0.05
+script = ExtResource("2_nqfxv")
+player_var_name = "hang_time"
+
+[node name="VBoxContainer5" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer/VBoxContainer5" node_paths=PackedStringArray("h_slider")]
+layout_mode = 2
+text = "Hang velocity mult"
+script = ExtResource("1_76ncq")
+text1 = "Hang velocity mult %s"
+h_slider = NodePath("../HSlider")
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/VBoxContainer5"]
+layout_mode = 2
+min_value = 1.0
+max_value = 3.0
+step = 0.25
+value = 1.0
+script = ExtResource("2_nqfxv")
+player_var_name = "hang_vel_mult"
+
+[node name="VBoxContainer10" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer10" node_paths=PackedStringArray("h_slider")]
+layout_mode = 2
+text = "Hang gravity mult"
+script = ExtResource("1_76ncq")
+text1 = "Hang gravity mult %s"
+h_slider = NodePath("../HSlider")
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/VBoxContainer10"]
+layout_mode = 2
+min_value = 0.1
+max_value = 0.75
+step = 0.05
+value = 0.1
+script = ExtResource("2_nqfxv")
+player_var_name = "hang_grav_mult"
+
+[node name="VBoxContainer11" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer11" node_paths=PackedStringArray("h_slider")]
+layout_mode = 2
+text = "Coyote time"
+script = ExtResource("1_76ncq")
+text1 = "Coyote time %s sec"
+h_slider = NodePath("../HSlider")
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/VBoxContainer11"]
+layout_mode = 2
+max_value = 0.3
+step = 0.05
+script = ExtResource("2_nqfxv")
+player_var_name = "coyote_time"
+
+[node name="VBoxContainer6" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer6" node_paths=PackedStringArray("h_slider")]
+layout_mode = 2
+text = "Move speed"
+script = ExtResource("1_76ncq")
+text1 = "Move speed %s m/s"
+h_slider = NodePath("../HSlider")
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/VBoxContainer6"]
+layout_mode = 2
+min_value = 0.5
+max_value = 16.0
+step = 0.5
+value = 0.5
+script = ExtResource("2_nqfxv")
+player_var_name = "move_speed"
+
+[node name="VBoxContainer7" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer7" node_paths=PackedStringArray("h_slider")]
+layout_mode = 2
+text = "Acceleration (sec)"
+script = ExtResource("1_76ncq")
+text1 = "Acceleration %s sec"
+h_slider = NodePath("../HSlider")
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/VBoxContainer7"]
+layout_mode = 2
+min_value = 0.05
+max_value = 1.0
+step = 0.05
+value = 0.05
+script = ExtResource("2_nqfxv")
+player_var_name = "accel_time_sec"
+
+[node name="VBoxContainer8" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer8" node_paths=PackedStringArray("h_slider")]
+layout_mode = 2
+text = "Deceleration (sec)"
+script = ExtResource("1_76ncq")
+text1 = "Deceleration %s sec"
+h_slider = NodePath("../HSlider")
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/VBoxContainer8"]
+layout_mode = 2
+min_value = 0.05
+max_value = 1.0
+step = 0.05
+value = 0.05
+script = ExtResource("2_nqfxv")
+player_var_name = "decel_time_sec"
+
+[node name="VBoxContainer9" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer9" node_paths=PackedStringArray("h_slider")]
+layout_mode = 2
+text = "Sensitivity"
+script = ExtResource("1_76ncq")
+text1 = "Sensitivity %s"
+h_slider = NodePath("../HSlider")
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/VBoxContainer9"]
+layout_mode = 2
+min_value = 0.05
+max_value = 1.0
+step = 0.05
+value = 0.05
+script = ExtResource("2_nqfxv")
+player_var_name = "sensitivity"
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Escape to unfocus
+Space to focus back"

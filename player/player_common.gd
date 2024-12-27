@@ -24,6 +24,7 @@ class_name Player
 @onready var camera: Camera3D = %Camera
 
 var camera_input_dir := Vector2.ZERO
+var jump_buffered : bool
 
 func _ready() -> void:
 	%HangTimer.wait_time = hang_time

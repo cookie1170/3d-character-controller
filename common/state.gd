@@ -13,7 +13,7 @@ func exit() -> void:
 	set_physics_process(false)
 	set_process_unhandled_input(false)
 
-func enter(_previous_state) -> void:
+func enter(_previous_state : State = null) -> void:
 	set_process(true)
 	set_physics_process(true)
 	set_process_unhandled_input(true)

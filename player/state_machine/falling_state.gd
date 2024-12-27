@@ -9,8 +9,8 @@ extends State
 
 var jump_cut : bool = false
 
-func enter(previous_state) -> void:
-	super(previous_state)
+func enter(previous_state : State = null) -> void:
+	super()
 	if previous_state == grounded_state:
 		coyote_timer.start()
 	if previous_state == jumping_state and not jump_cut:
@@ -25,8 +25,10 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("jump"):
 		if not coyote_timer.is_stopped():
 			emit_signal("state_changed", jumping_state)
+		else:
+			owner.jump_buffered = true
 	if owner.is_on_floor():
-		emit_signal("state_changed", grounded_state)	
+		emit_signal("state_changed", grounded_state)
 
 func recalculate_movement() -> void:
 	grav = (-2.0 * owner.jump_height) / (owner.fall_time_sec ** 2)

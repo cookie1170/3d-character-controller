@@ -5,4 +5,4 @@ extends Label
 
 
 func _process(_delta: float) -> void:
-	text = text1 + " " + str(h_slider.value)
+	text = text1 % str(h_slider.value)

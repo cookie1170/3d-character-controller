@@ -12,17 +12,16 @@
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_2ty25")
-sensitivity = 0.4
-jump_height = 4.0
-peak_time_sec = 0.35
-fall_time_sec = 0.3
-hang_time = 0.15
-hang_vel_mult = 1.25
+jump_height = 3.0
+peak_time_sec = 0.3
+fall_time_sec = 0.25
+hang_time = 0.1
+hang_vel_mult = 1.5
 hang_grav_mult = 0.5
-coyote_time = 0.2
+coyote_time = 0.1
 terminal_velocity = 16.0
-move_speed = 14.0
-accel_time_sec = 0.1
+move_speed = 12.0
+accel_time_sec = 0.15
 decel_time_sec = 0.1
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
