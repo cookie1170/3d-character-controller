@@ -147,9 +147,9 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/VBoxContainer6" node_paths=PackedStringArray("h_slider")]
 layout_mode = 2
-text = "Move speed"
+text = "Top speed"
 script = ExtResource("1_76ncq")
-text1 = "Move speed %s m/s"
+text1 = "Top speed %s m/s"
 h_slider = NodePath("../HSlider")
 
 [node name="HSlider" type="HSlider" parent="VBoxContainer/VBoxContainer6"]

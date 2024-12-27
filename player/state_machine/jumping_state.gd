@@ -1,5 +1,6 @@
 extends State
 
+@warning_ignore("unused_signal")
 signal jump_cut
 
 @export var grounded_state : State
@@ -8,7 +9,7 @@ signal jump_cut
 @onready var jump_velocity : float = (2.0 * owner.jump_height) / owner.peak_time_sec
 @onready var grav : float = (-2.0 * owner.jump_height) / (owner.peak_time_sec ** 2)
 
-func enter(previous_state : State = null) -> void:
+func enter(_previous_state : State = null) -> void:
 	super()
 	owner.velocity.y = jump_velocity
 
