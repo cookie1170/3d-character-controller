@@ -6,8 +6,9 @@
 [node name="StatChanger" type="CanvasLayer"]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-offset_right = 283.0
-offset_bottom = 404.0
+offset_left = 10.0
+offset_right = 293.0
+offset_bottom = 660.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -147,9 +148,9 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/VBoxContainer6" node_paths=PackedStringArray("h_slider")]
 layout_mode = 2
-text = "Top speed"
+text = "Walking speed"
 script = ExtResource("1_76ncq")
-text1 = "Top speed %s m/s"
+text1 = "Walking speed %s m/s"
 h_slider = NodePath("../HSlider")
 
 [node name="HSlider" type="HSlider" parent="VBoxContainer/VBoxContainer6"]
@@ -160,6 +161,42 @@ step = 0.5
 value = 0.5
 script = ExtResource("2_nqfxv")
 player_var_name = "move_speed"
+
+[node name="VBoxContainer12" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer12" node_paths=PackedStringArray("h_slider")]
+layout_mode = 2
+text = "Running speed"
+script = ExtResource("1_76ncq")
+text1 = "Running speed %s m/s"
+h_slider = NodePath("../HSlider")
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/VBoxContainer12"]
+layout_mode = 2
+min_value = 0.5
+max_value = 20.0
+step = 0.5
+value = 0.5
+script = ExtResource("2_nqfxv")
+player_var_name = "running_speed"
+
+[node name="VBoxContainer13" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer13" node_paths=PackedStringArray("h_slider")]
+layout_mode = 2
+text = "Run delay"
+script = ExtResource("1_76ncq")
+text1 = "Run delay %s sec"
+h_slider = NodePath("../HSlider")
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/VBoxContainer13"]
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+script = ExtResource("2_nqfxv")
+player_var_name = "run_delay"
 
 [node name="VBoxContainer7" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2

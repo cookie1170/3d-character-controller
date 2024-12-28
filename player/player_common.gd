@@ -13,6 +13,8 @@ class_name Player
 @export var coyote_time : float
 @export var terminal_velocity : float
 @export var move_speed : float
+@export var running_speed : float
+@export var run_delay : float
 @export var accel_time_sec : float
 @export var decel_time_sec : float
 
@@ -22,12 +24,12 @@ class_name Player
 
 ## nodes
 @onready var camera: Camera3D = %Camera
+@onready var run_timer: Timer = %RunTimer
+@onready var stop_run_timer: Timer = %StopRunTimer
 
 var camera_input_dir := Vector2.ZERO
 var jump_buffered : bool
-
-func _ready() -> void:
-	%HangTimer.wait_time = hang_time
+var running : bool = false
 
 func _input(event: InputEvent) -> void:
 	## lets you focus in and out of the window
@@ -56,13 +58,29 @@ func _physics_process(delta: float) -> void:
 	camera_input_dir = Vector2.ZERO
 
 	var move_dir = _get_move_dir()
+
 	## accelerates the velocity towards the move direction
 	if move_dir:
-		velocity.x = move_toward(velocity.x, move_dir.x * move_speed, accel * delta)
-		velocity.z = move_toward(velocity.z, move_dir.y * move_speed, accel * delta)
+		velocity.x = move_toward(
+				velocity.x, move_dir.x * _get_final_speed(), accel * delta
+			)
+		velocity.z = move_toward(
+				velocity.z, move_dir.y * _get_final_speed(), accel * delta
+			)
+		if run_timer.is_stopped() and not running and not _is_slowed_down():
+			run_timer.start()
+		if stop_run_timer.is_stopped() and _is_slowed_down():
+			stop_run_timer.start()
+		if not _is_slowed_down():
+			stop_run_timer.stop()
+
 	else:
 		velocity.x = move_toward(velocity.x, 0, decel * delta)
 		velocity.z = move_toward(velocity.z, 0, decel * delta)
+		if stop_run_timer.is_stopped():
+			stop_run_timer.start()
+
+	get_tree().create_tween().tween_property(camera, "fov", 90.0 if running else 75.0, 0.25)
 
 	move_and_slide()
 
@@ -81,6 +99,14 @@ func _get_move_dir() -> Vector2:
 	return Vector2(move_dir.x, move_dir.z)
 
 
+func _get_final_speed() -> float:
+	return (running_speed if running else move_speed)\
+	 * (0.5 if Input.get_axis("back", "forw") < 0 else 1.0)
+
+func _is_slowed_down() -> bool:
+	return Input.get_axis("back", "forw") <= 0
+
+
 func recalculate_movement() -> void:
 	accel = move_speed / accel_time_sec
 	decel = move_speed / decel_time_sec
@@ -88,3 +114,12 @@ func recalculate_movement() -> void:
 	$StateMachine/Falling.recalculate_movement()
 	%HangTimer.wait_time = hang_time
 	%CoyoteTimer.wait_time = coyote_time
+	%RunTimer.wait_time = run_delay
+
+
+func _on_run_timer_timeout() -> void:
+	running = true
+
+
+func _on_stop_run_timer_timeout() -> void:
+	running = false

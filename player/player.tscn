@@ -22,7 +22,9 @@ hang_vel_mult = 1.25
 hang_grav_mult = 0.5
 coyote_time = 0.2
 terminal_velocity = 16.0
-move_speed = 14.0
+move_speed = 10.0
+running_speed = 16.0
+run_delay = 0.5
 accel_time_sec = 0.1
 decel_time_sec = 0.1
 
@@ -45,7 +47,17 @@ one_shot = true
 
 [node name="HangTimer" type="Timer" parent="."]
 unique_name_in_owner = true
-wait_time = 0.1
+wait_time = 0.15
+one_shot = true
+
+[node name="RunTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.5
+one_shot = true
+
+[node name="StopRunTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.2
 one_shot = true
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("default_state")]
@@ -67,6 +79,8 @@ script = ExtResource("4_ynvve")
 jumping_state = NodePath("../Jumping")
 grounded_state = NodePath("../Grounded")
 
+[connection signal="timeout" from="RunTimer" to="." method="_on_run_timer_timeout"]
+[connection signal="timeout" from="StopRunTimer" to="." method="_on_stop_run_timer_timeout"]
 [connection signal="state_changed" from="StateMachine/Grounded" to="StateMachine" method="_change_state"]
 [connection signal="jump_cut" from="StateMachine/Jumping" to="StateMachine/Falling" method="_on_jump_cut"]
 [connection signal="state_changed" from="StateMachine/Jumping" to="StateMachine" method="_change_state"]

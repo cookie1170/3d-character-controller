@@ -16,10 +16,10 @@ size = Vector2(64, 64)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_vklum"]
 data = PackedVector3Array(32, 0, 32, -32, 0, 32, 32, 0, -32, -32, 0, 32, -32, 0, -32, 32, 0, -32)
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_y44vv"]
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wxewf"]
 
 [sub_resource type="Sky" id="Sky_hlfcq"]
-sky_material = SubResource("ProceduralSkyMaterial_y44vv")
+sky_material = SubResource("ProceduralSkyMaterial_wxewf")
 
 [sub_resource type="Environment" id="Environment_7ua0a"]
 background_mode = 2
@@ -36,10 +36,10 @@ albedo_texture = ExtResource("3_l2bkr")
 uv1_scale = Vector3(1, 10, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_leal2"]
-size = Vector3(1, 10, 1)
+size = Vector3(5, 10, 1)
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_0mvea"]
-data = PackedVector3Array(-0.5, 5, 0.5, 0.5, 5, 0.5, -0.5, -5, 0.5, 0.5, 5, 0.5, 0.5, -5, 0.5, -0.5, -5, 0.5, 0.5, 5, -0.5, -0.5, 5, -0.5, 0.5, -5, -0.5, -0.5, 5, -0.5, -0.5, -5, -0.5, 0.5, -5, -0.5, 0.5, 5, 0.5, 0.5, 5, -0.5, 0.5, -5, 0.5, 0.5, 5, -0.5, 0.5, -5, -0.5, 0.5, -5, 0.5, -0.5, 5, -0.5, -0.5, 5, 0.5, -0.5, -5, -0.5, -0.5, 5, 0.5, -0.5, -5, 0.5, -0.5, -5, -0.5, 0.5, 5, 0.5, -0.5, 5, 0.5, 0.5, 5, -0.5, -0.5, 5, 0.5, -0.5, 5, -0.5, 0.5, 5, -0.5, -0.5, -5, 0.5, 0.5, -5, 0.5, -0.5, -5, -0.5, 0.5, -5, 0.5, 0.5, -5, -0.5, -0.5, -5, -0.5)
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_d60uo"]
+data = PackedVector3Array(-2.5, 5, 0.5, 2.5, 5, 0.5, -2.5, -5, 0.5, 2.5, 5, 0.5, 2.5, -5, 0.5, -2.5, -5, 0.5, 2.5, 5, -0.5, -2.5, 5, -0.5, 2.5, -5, -0.5, -2.5, 5, -0.5, -2.5, -5, -0.5, 2.5, -5, -0.5, 2.5, 5, 0.5, 2.5, 5, -0.5, 2.5, -5, 0.5, 2.5, 5, -0.5, 2.5, -5, -0.5, 2.5, -5, 0.5, -2.5, 5, -0.5, -2.5, 5, 0.5, -2.5, -5, -0.5, -2.5, 5, 0.5, -2.5, -5, 0.5, -2.5, -5, -0.5, 2.5, 5, 0.5, -2.5, 5, 0.5, 2.5, 5, -0.5, -2.5, 5, 0.5, -2.5, 5, -0.5, 2.5, 5, -0.5, -2.5, -5, 0.5, 2.5, -5, 0.5, -2.5, -5, -0.5, 2.5, -5, 0.5, 2.5, -5, -0.5, -2.5, -5, -0.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_katl2"]
 albedo_texture = ExtResource("6_wppc4")
@@ -89,14 +89,14 @@ shape = SubResource("ConcavePolygonShape3D_vklum")
 environment = SubResource("Environment_7ua0a")
 
 [node name="HeightRuler" type="MeshInstance3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 5, -2)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 5, -4)
 material_override = SubResource("StandardMaterial3D_t1gbn")
 mesh = SubResource("BoxMesh_leal2")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="HeightRuler"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HeightRuler/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_0mvea")
+shape = SubResource("ConcavePolygonShape3D_d60uo")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2, 11)
