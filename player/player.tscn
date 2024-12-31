@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://bi40akbu0hcyl"]
 
-[ext_resource type="Script" path="res://player/player_common.gd" id="1_2ty25"]
-[ext_resource type="Script" path="res://common/state_machine.gd" id="2_jafdf"]
-[ext_resource type="Script" path="res://player/state_machine/grounded_state.gd" id="3_mujy3"]
-[ext_resource type="Script" path="res://player/state_machine/jumping_state.gd" id="4_fr13y"]
-[ext_resource type="Script" path="res://player/state_machine/falling_state.gd" id="4_ynvve"]
+[ext_resource type="Script" uid="uid://deipds2js04f4" path="res://player/player_common.gd" id="1_2ty25"]
+[ext_resource type="Script" uid="uid://bip1wtpm4ldpx" path="res://common/state_machine.gd" id="2_jafdf"]
+[ext_resource type="Script" uid="uid://rj31aiujb1ya" path="res://player/state_machine/grounded_state.gd" id="3_mujy3"]
+[ext_resource type="Script" uid="uid://cdeo6a5k8cje" path="res://player/state_machine/jumping_state.gd" id="4_fr13y"]
+[ext_resource type="Script" uid="uid://odam5swb7u3x" path="res://player/state_machine/falling_state.gd" id="4_ynvve"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_is63v"]
 

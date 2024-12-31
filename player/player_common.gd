@@ -49,14 +49,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		camera_input_dir = event.screen_relative * sensitivity
 
 func _physics_process(delta: float) -> void:
-	## camera rotation
-	camera.rotation.x -= camera_input_dir.y * delta
-	camera.rotation.x = clampf(camera.rotation.x, 
-			deg_to_rad(-80), deg_to_rad(80)
-	)
-	camera.rotation.y -= camera_input_dir.x * delta
-	camera_input_dir = Vector2.ZERO
-
 	var move_dir = _get_move_dir()
 
 	## accelerates the velocity towards the move direction
@@ -77,12 +69,19 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, decel * delta)
 		velocity.z = move_toward(velocity.z, 0, decel * delta)
+		run_timer.stop()
 		if stop_run_timer.is_stopped():
 			stop_run_timer.start()
 
-	get_tree().create_tween().tween_property(camera, "fov", 90.0 if running else 75.0, 0.25)
-
 	move_and_slide()
+
+func _process(delta: float) -> void:
+	camera.rotation.x -= camera_input_dir.y * delta
+	camera.rotation.x = clampf(camera.rotation.x, 
+			deg_to_rad(-80), deg_to_rad(80)
+	)
+	camera.rotation.y -= camera_input_dir.x * delta
+	camera_input_dir = Vector2.ZERO
 
 
 func _get_move_dir() -> Vector2:
@@ -119,7 +118,9 @@ func recalculate_movement() -> void:
 
 func _on_run_timer_timeout() -> void:
 	running = true
+	get_tree().create_tween().tween_property(camera, "fov", 90.0, 0.25)
 
 
 func _on_stop_run_timer_timeout() -> void:
 	running = false
+	get_tree().create_tween().tween_property(camera, "fov", 75.0, 0.25)
