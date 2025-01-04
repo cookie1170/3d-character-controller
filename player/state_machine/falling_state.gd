@@ -22,6 +22,7 @@ func enter(previous_state : State = null) -> void:
 		 owner.velocity.z * owner.hang_vel_mult, owner.hang_time / 1.5)
 	jump_cut = false
 
+
 func _physics_process(delta: float) -> void:
 	owner.velocity.y += grav * delta * _get_grav_mult()
 
@@ -37,11 +38,10 @@ func _physics_process(delta: float) -> void:
 	if owner.is_on_floor():
 		emit_signal("state_changed", grounded_state)
 
-func recalculate_movement() -> void:
-	grav = (-2.0 * owner.jump_height) / (owner.fall_time_sec ** 2)
 
 func _get_grav_mult() -> float:
 	return (owner.hang_grav_mult if not hang_timer.is_stopped() else 1.0)
+
 
 func _on_jump_cut() -> void:
 	jump_cut = true

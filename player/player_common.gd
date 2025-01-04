@@ -4,19 +4,19 @@ class_name Player
 @export_range(0.1, 2.0) var sensitivity : float = 0.5
 ## movement variable exports
 @export_group("Movement variables")
-@export var jump_height : float
-@export var peak_time_sec : float
-@export var fall_time_sec : float
-@export var hang_time : float
-@export var hang_vel_mult : float
-@export var hang_grav_mult : float
-@export var coyote_time : float
-@export var terminal_velocity : float
-@export var move_speed : float
-@export var running_speed : float
-@export var run_delay : float
-@export var accel_time_sec : float
-@export var decel_time_sec : float
+@export_range(2, 10, 0.5) var jump_height : float
+@export_range(0.1, 1, 0.05) var peak_time_sec : float
+@export_range(0.1, 1, 0.05) var fall_time_sec : float
+@export_range(0.1, 1, 0.05) var hang_time : float
+@export_range(1, 3, 0.05) var hang_vel_mult : float
+@export_range(0.1, 1, 0.05) var hang_grav_mult : float
+@export_range(0.1, 1, 0.05) var coyote_time : float
+@export_range(4, 32) var terminal_velocity : float
+@export_range(1, 16, 0.5) var move_speed : float
+@export_range(1, 24, 0.5) var running_speed : float
+@export_range(0.1, 1, 0.05) var run_delay : float
+@export_range(0.05, 1, 0.05) var accel_time_sec : float
+@export_range(0.05, 1, 0.05) var decel_time_sec : float
 
 ## math
 @onready var accel : float = move_speed / accel_time_sec
@@ -38,6 +38,7 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
+
 func _unhandled_input(event: InputEvent) -> void:
 	## gets the camera input direction
 	var is_camera_moving : bool = (
@@ -48,17 +49,21 @@ func _unhandled_input(event: InputEvent) -> void:
 	if is_camera_moving:
 		camera_input_dir = event.screen_relative * sensitivity
 
+
 func _physics_process(delta: float) -> void:
 	var move_dir = _get_move_dir()
 
 	## accelerates the velocity towards the move direction
 	if move_dir:
 		velocity.x = move_toward(
-				velocity.x, move_dir.x * _get_final_speed(), accel * delta
+				velocity.x, move_dir.x * _get_final_speed(),\
+				 accel * delta
 			)
 		velocity.z = move_toward(
-				velocity.z, move_dir.y * _get_final_speed(), accel * delta
+				velocity.z, move_dir.y * _get_final_speed(),\
+				 accel * delta
 			)
+
 		if run_timer.is_stopped() and not running and not _is_slowed_down():
 			run_timer.start()
 		if stop_run_timer.is_stopped() and _is_slowed_down():
@@ -67,13 +72,18 @@ func _physics_process(delta: float) -> void:
 			stop_run_timer.stop()
 
 	else:
-		velocity.x = move_toward(velocity.x, 0, decel * delta)
-		velocity.z = move_toward(velocity.z, 0, decel * delta)
+		velocity.x = move_toward(
+				velocity.x, 0, decel * delta
+			)
+		velocity.z = move_toward(
+				velocity.z, 0, decel * delta
+			)
 		run_timer.stop()
 		if stop_run_timer.is_stopped():
 			stop_run_timer.start()
 
 	move_and_slide()
+
 
 func _process(delta: float) -> void:
 	camera.rotation.x -= camera_input_dir.y * delta
@@ -102,18 +112,9 @@ func _get_final_speed() -> float:
 	return (running_speed if running else move_speed)\
 	 * (0.5 if Input.get_axis("back", "forw") < 0 else 1.0)
 
+
 func _is_slowed_down() -> bool:
 	return Input.get_axis("back", "forw") <= 0
-
-
-func recalculate_movement() -> void:
-	accel = move_speed / accel_time_sec
-	decel = move_speed / decel_time_sec
-	$StateMachine/Jumping.recalculate_movement()
-	$StateMachine/Falling.recalculate_movement()
-	%HangTimer.wait_time = hang_time
-	%CoyoteTimer.wait_time = coyote_time
-	%RunTimer.wait_time = run_delay
 
 
 func _on_run_timer_timeout() -> void:

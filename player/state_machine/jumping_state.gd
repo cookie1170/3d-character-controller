@@ -13,6 +13,7 @@ func enter(_previous_state : State = null) -> void:
 	super()
 	owner.velocity.y = jump_velocity
 
+
 func _physics_process(delta: float) -> void:
 	owner.velocity.y += grav * delta
 	if owner.is_on_floor():
@@ -23,7 +24,3 @@ func _physics_process(delta: float) -> void:
 		owner.velocity.y -= 4
 		emit_signal("jump_cut")
 		emit_signal("state_changed", falling_state)
-
-func recalculate_movement() -> void:
-	jump_velocity = (2.0 * owner.jump_height) / owner.peak_time_sec
-	grav = (-2.0 * owner.jump_height) / (owner.peak_time_sec ** 2)
