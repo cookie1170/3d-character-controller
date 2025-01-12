@@ -18,12 +18,19 @@ func load_settings() -> void:
 	if currentValue == 0:
 		ValueBoxRef.set_text(\"Unlimited\")
 		SliderRef.set_value(MAX_VALUE + 1)
+	if currentValue == DisplayServer.screen_get_refresh_rate():
+		ValueBoxRef.set_text(\"Monitor refresh rate\")
+		SliderRef.set_value(MIN_VALUE - 1)
+		value_changed(MIN_VALUE - 1)
 
 
 func value_changed(value: float) -> void:
 	if value > MAX_VALUE:
 		value = 0
 		ValueBoxRef.set_text(\"Unlimited\")
+	if value < MIN_VALUE:
+		value = DisplayServer.screen_get_refresh_rate()
+		ValueBoxRef.set_text(\"Monitor refresh rate\")
 	
 	super.value_changed(value)
 	

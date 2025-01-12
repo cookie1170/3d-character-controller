@@ -5,6 +5,23 @@ resource_name = "display_mode"
 script/source = "extends OptionElement
 
 
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed(\"fullscreen\"):
+		match currentValue:
+			\"Fullscreen\":
+				OptionsRef.select(1)
+				option_selected(1)
+				_apply_settings()
+			\"Borderless Windowed\":
+				OptionsRef.select(2)
+				option_selected(2)
+				_apply_settings()
+			\"Windowed\":
+				OptionsRef.select(0)
+				option_selected(0)
+				_apply_settings()
+
+
 func _init() -> void:
 	OPTION_LIST_ = {
 		\"Fullscreen\": DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN,

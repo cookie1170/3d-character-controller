@@ -1,7 +1,11 @@
 extends CharacterBody3D
 class_name Player
 
-@export_range(0.1, 2.0) var sensitivity : float = 0.5
+@export_group("Camera")
+@export_range(0.1, 5.0) var sensitivity : float = 0.5
+@export_range(60, 130) var walking_fov : int = 75
+@export_range(60, 130) var running_fov : int = 90
+@export var invert_y : bool = false
 ## movement variable exports
 @export_group("Movement variables")
 @export_range(2, 10, 0.5) var jump_height : float
@@ -35,6 +39,7 @@ var horizontal_vel := Vector2.ZERO
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	camera.fov = walking_fov
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -76,16 +81,14 @@ func _physics_process(delta: float) -> void:
 
 	velocity.x = horizontal_vel.x
 	velocity.z = horizontal_vel.y
-	move_and_slide()
-
-
-func _process(delta: float) -> void:
-	camera.rotation.x -= camera_input_dir.y * delta
+	camera.rotation.x -= camera_input_dir.y * delta\
+	 * (-1.0 if invert_y else 1.0)
 	camera.rotation.x = clampf(camera.rotation.x, 
-			deg_to_rad(-80), deg_to_rad(80)
+			deg_to_rad(-80.0), deg_to_rad(80.0)
 	)
 	camera.rotation.y -= camera_input_dir.x * delta
 	camera_input_dir = Vector2.ZERO
+	move_and_slide()
 
 
 func _get_move_dir() -> Vector2:
@@ -113,9 +116,9 @@ func _is_slowed_down() -> bool:
 
 func _on_run_timer_timeout() -> void:
 	running = true
-	get_tree().create_tween().tween_property(camera, "fov", 90.0, 0.25)
+	get_tree().create_tween().tween_property(camera, "fov", running_fov, 0.25)
 
 
 func _on_stop_run_timer_timeout() -> void:
 	running = false
-	get_tree().create_tween().tween_property(camera, "fov", 75.0, 0.25)
+	get_tree().create_tween().tween_property(camera, "fov", walking_fov, 0.25)

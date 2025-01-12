@@ -42,10 +42,9 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/tab_focus = SubResource("StyleBoxEmpty_kwbsm")
-current_tab = 2
+current_tab = 0
 
 [node name="Gameplay" parent="SettingsPanel/SettingsTabs" instance=ExtResource("2_kjxrg")]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -55,6 +54,7 @@ layout_mode = 2
 metadata/_tab_index = 1
 
 [node name="Controls" parent="SettingsPanel/SettingsTabs" instance=ExtResource("4_3a4pu")]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 

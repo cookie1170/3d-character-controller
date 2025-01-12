@@ -1,9 +1,10 @@
-[gd_scene load_steps=25 format=3 uid="uid://b311iowaksq5g"]
+[gd_scene load_steps=28 format=3 uid="uid://b311iowaksq5g"]
 
 [ext_resource type="Texture2D" uid="uid://dfyw2iwb4x2g1" path="res://textures/prototype_materials/Orange/texture_02.png" id="1_dhusm"]
 [ext_resource type="PackedScene" uid="uid://bi40akbu0hcyl" path="res://player/player.tscn" id="1_xhwim"]
 [ext_resource type="Texture2D" uid="uid://dlwvdwdq08fpw" path="res://textures/prototype_materials/Purple/texture_01.png" id="3_l2bkr"]
 [ext_resource type="PackedScene" uid="uid://cvdhnviri2bwk" path="res://THE GODOT PLUSH/godot_plush V2.blend" id="5_safpt"]
+[ext_resource type="PackedScene" uid="uid://ddlewhb47xnag" path="res://common/you_have_reached_thegodotplush.tscn" id="6_gjl0y"]
 [ext_resource type="Texture2D" uid="uid://cwtb4betwjcuu" path="res://textures/prototype_materials/Green/texture_02.png" id="6_wppc4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wxewf"]
@@ -36,10 +37,10 @@ albedo_texture = ExtResource("3_l2bkr")
 uv1_scale = Vector3(5, 10, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_leal2"]
-size = Vector3(5, 10, 1)
+size = Vector3(5, 10, 5)
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_d60uo"]
-data = PackedVector3Array(-2.5, 5, 0.5, 2.5, 5, 0.5, -2.5, -5, 0.5, 2.5, 5, 0.5, 2.5, -5, 0.5, -2.5, -5, 0.5, 2.5, 5, -0.5, -2.5, 5, -0.5, 2.5, -5, -0.5, -2.5, 5, -0.5, -2.5, -5, -0.5, 2.5, -5, -0.5, 2.5, 5, 0.5, 2.5, 5, -0.5, 2.5, -5, 0.5, 2.5, 5, -0.5, 2.5, -5, -0.5, 2.5, -5, 0.5, -2.5, 5, -0.5, -2.5, 5, 0.5, -2.5, -5, -0.5, -2.5, 5, 0.5, -2.5, -5, 0.5, -2.5, -5, -0.5, 2.5, 5, 0.5, -2.5, 5, 0.5, 2.5, 5, -0.5, -2.5, 5, 0.5, -2.5, 5, -0.5, 2.5, 5, -0.5, -2.5, -5, 0.5, 2.5, -5, 0.5, -2.5, -5, -0.5, 2.5, -5, 0.5, 2.5, -5, -0.5, -2.5, -5, -0.5)
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_gjl0y"]
+data = PackedVector3Array(-2.5, 5, 2.5, 2.5, 5, 2.5, -2.5, -5, 2.5, 2.5, 5, 2.5, 2.5, -5, 2.5, -2.5, -5, 2.5, 2.5, 5, -2.5, -2.5, 5, -2.5, 2.5, -5, -2.5, -2.5, 5, -2.5, -2.5, -5, -2.5, 2.5, -5, -2.5, 2.5, 5, 2.5, 2.5, 5, -2.5, 2.5, -5, 2.5, 2.5, 5, -2.5, 2.5, -5, -2.5, 2.5, -5, 2.5, -2.5, 5, -2.5, -2.5, 5, 2.5, -2.5, -5, -2.5, -2.5, 5, 2.5, -2.5, -5, 2.5, -2.5, -5, -2.5, 2.5, 5, 2.5, -2.5, 5, 2.5, 2.5, 5, -2.5, -2.5, 5, 2.5, -2.5, 5, -2.5, 2.5, 5, -2.5, -2.5, -5, 2.5, 2.5, -5, 2.5, -2.5, -5, -2.5, 2.5, -5, 2.5, 2.5, -5, -2.5, -2.5, -5, -2.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ecyyx"]
 albedo_texture = ExtResource("6_wppc4")
@@ -74,6 +75,19 @@ size = Vector3(4, 1, 4)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_15o5p"]
 data = PackedVector3Array(-2, 0.5, 2, 2, 0.5, 2, -2, -0.5, 2, 2, 0.5, 2, 2, -0.5, 2, -2, -0.5, 2, 2, 0.5, -2, -2, 0.5, -2, 2, -0.5, -2, -2, 0.5, -2, -2, -0.5, -2, 2, -0.5, -2, 2, 0.5, 2, 2, 0.5, -2, 2, -0.5, 2, 2, 0.5, -2, 2, -0.5, -2, 2, -0.5, 2, -2, 0.5, -2, -2, 0.5, 2, -2, -0.5, -2, -2, 0.5, 2, -2, -0.5, 2, -2, -0.5, -2, 2, 0.5, 2, -2, 0.5, 2, 2, 0.5, -2, -2, 0.5, 2, -2, 0.5, -2, 2, 0.5, -2, -2, -0.5, 2, 2, -0.5, 2, -2, -0.5, -2, 2, -0.5, 2, 2, -0.5, -2, -2, -0.5, -2)
 
+[sub_resource type="GDScript" id="GDScript_safpt"]
+resource_name = "thegodotplush_trigger"
+script/source = "extends Area3D
+
+@export var scene : PackedScene
+
+func _on_body_entered(body: Node3D) -> void:
+	owner.add_child(scene.instantiate())
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_safpt"]
+size = Vector3(3, 3, 3)
+
 [node name="Level" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -92,16 +106,16 @@ metadata/_edit_group_ = true
 [node name="CollisionShape3D" type="CollisionShape3D" parent="FloorPlane/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_vklum")
 
-[node name="HeightRuler" type="MeshInstance3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 5, -4)
+[node name="GodotPlushPedestal" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4, 5, -4)
 material_override = SubResource("StandardMaterial3D_t1gbn")
 mesh = SubResource("BoxMesh_leal2")
 metadata/_edit_group_ = true
 
-[node name="StaticBody3D" type="StaticBody3D" parent="HeightRuler"]
+[node name="StaticBody3D" type="StaticBody3D" parent="GodotPlushPedestal"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="HeightRuler/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_d60uo")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GodotPlushPedestal/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_gjl0y")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2, 11)
@@ -170,4 +184,17 @@ metadata/_edit_group_ = true
 shape = SubResource("ConcavePolygonShape3D_15o5p")
 
 [node name="IT IS THE GODOT PLUSH" parent="." instance=ExtResource("5_safpt")]
-transform = Transform3D(8.66025, 0, 5, 0, 10, 0, -5, 0, 8.66025, 0, 0, 4)
+transform = Transform3D(2.58819, 0, -9.65925, 0, 10, 0, 9.65925, 0, 2.58819, -4, 10, -4)
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 10, -4)
+collision_layer = 0
+collision_mask = 2
+script = SubResource("GDScript_safpt")
+scene = ExtResource("6_gjl0y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_safpt")
+
+[connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]
