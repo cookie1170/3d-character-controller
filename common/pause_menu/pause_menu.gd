@@ -4,7 +4,7 @@ extends Control
 
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel"):
+	if event.is_action_pressed("pause"):
 		owner.set_visible(!owner.is_visible())
 		get_tree().set_pause(owner.is_visible())
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE if owner.is_visible()\
