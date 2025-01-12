@@ -15,11 +15,8 @@ func enter(previous_state : State = null) -> void:
 		coyote_timer.start()
 	if previous_state == jumping_state and not jump_cut:
 		hang_timer.start()
-		var tween = get_tree().create_tween()
-		tween.tween_property(owner, "velocity:x",\
-		 owner.velocity.x * owner.hang_vel_mult, owner.hang_time / 1.5)
-		tween.tween_property(owner, "velocity:z",\
-		 owner.velocity.z * owner.hang_vel_mult, owner.hang_time / 1.5)
+		owner.velocity.x *= owner.hang_vel_mult
+		owner.velocity.z *= owner.hang_vel_mult
 	jump_cut = false
 
 

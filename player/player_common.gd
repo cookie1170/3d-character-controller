@@ -30,13 +30,11 @@ class_name Player
 var camera_input_dir := Vector2.ZERO
 var jump_buffered : bool
 var running : bool = false
+var horizontal_vel := Vector2.ZERO
 
-func _input(event: InputEvent) -> void:
-	## lets you focus in and out of the window
-	if event.is_action_pressed("focus_click"):
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	if event.is_action_pressed("ui_cancel"):
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+func _ready() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -55,14 +53,8 @@ func _physics_process(delta: float) -> void:
 
 	## accelerates the velocity towards the move direction
 	if move_dir:
-		velocity.x = move_toward(
-				velocity.x, move_dir.x * _get_final_speed(),\
-				 accel * delta
-			)
-		velocity.z = move_toward(
-				velocity.z, move_dir.y * _get_final_speed(),\
-				 accel * delta
-			)
+		horizontal_vel = horizontal_vel.move_toward(move_dir * _get_final_speed(),\
+		 	accel * delta)
 
 		if run_timer.is_stopped() and not running and not _is_slowed_down():
 			run_timer.start()
@@ -72,16 +64,18 @@ func _physics_process(delta: float) -> void:
 			stop_run_timer.stop()
 
 	else:
-		velocity.x = move_toward(
-				velocity.x, 0, decel * delta
-			)
-		velocity.z = move_toward(
-				velocity.z, 0, decel * delta
-			)
+		horizontal_vel = horizontal_vel.move_toward(Vector2.ZERO, decel * delta)
 		run_timer.stop()
 		if stop_run_timer.is_stopped():
 			stop_run_timer.start()
+		
 
+	if horizontal_vel != move_dir * _get_final_speed():
+		if not horizontal_vel.normalized() == move_dir:
+			horizontal_vel = horizontal_vel.length() * move_dir
+
+	velocity.x = horizontal_vel.x
+	velocity.z = horizontal_vel.y
 	move_and_slide()
 
 
