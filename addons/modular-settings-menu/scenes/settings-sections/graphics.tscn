@@ -81,6 +81,7 @@ layout_mode = 2
 
 [node name="MaxFPS" parent="MarginContainer/ScrollContainer/MarginContainer/ElementList/BasicSettings/SubSectionElements" instance=ExtResource("5_82fyi")]
 layout_mode = 2
+DEFAULT_VALUE = 60.0
 
 [node name="AdvancedSettings" type="VBoxContainer" parent="MarginContainer/ScrollContainer/MarginContainer/ElementList"]
 layout_mode = 2

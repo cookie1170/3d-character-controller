@@ -162,11 +162,11 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Input Settings"
 script = SubResource("GDScript_te2ja")
-ACTION_LIST_ = {
+ACTION_LIST_ = Dictionary[String, String]({
 "back": "Backwards",
 "forw": "Forwards",
 "jump": "Jump",
 "left": "Left",
 "right": "Right"
-}
+})
 ElementPanelScene = ExtResource("1_6pc66")

@@ -88,6 +88,8 @@ func _physics_process(delta: float) -> void:
 	)
 	camera.rotation.y -= camera_input_dir.x * delta
 	camera_input_dir = Vector2.ZERO
+	if Input.is_action_just_pressed("focus_click"):
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	move_and_slide()
 
 
