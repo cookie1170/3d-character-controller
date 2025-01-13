@@ -23,8 +23,8 @@ class_name Player
 @export_range(0.05, 1, 0.05) var decel_time_sec : float
 
 ## math
-@onready var accel : float = move_speed / accel_time_sec
-@onready var decel : float = move_speed / decel_time_sec
+@onready var accel : float = running_speed / accel_time_sec
+@onready var decel : float = running_speed / decel_time_sec
 
 ## nodes
 @onready var camera: Camera3D = %Camera
@@ -91,8 +91,8 @@ func _physics_process(delta: float) -> void:
 	camera_input_dir = Vector2.ZERO
 	if Input.is_action_just_pressed("focus_click"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	if Input.is_action_just_pressed("ui_cancel"):
-		horizontal_vel = Vector2(40, 40) * Vector2(move_dir.x, move_dir.y)
+	if Input.is_action_just_pressed("boost_temp"):
+		horizontal_vel += Vector2(40, 40) * Vector2(move_dir.x, move_dir.y)
 		velocity.y = 40
 	print(snappedf(horizontal_vel.length(), 0.05))
 	move_and_slide()
