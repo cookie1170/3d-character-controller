@@ -1,10 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://bi40akbu0hcyl"]
+[gd_scene load_steps=11 format=3 uid="uid://bi40akbu0hcyl"]
 
 [ext_resource type="Script" uid="uid://deipds2js04f4" path="res://player/player_common.gd" id="1_2ty25"]
 [ext_resource type="Script" uid="uid://bip1wtpm4ldpx" path="res://common/state_machine/state_machine.gd" id="2_jafdf"]
-[ext_resource type="Script" uid="uid://rj31aiujb1ya" path="res://player/state_machine/grounded_state.gd" id="3_mujy3"]
-[ext_resource type="Script" uid="uid://cdeo6a5k8cje" path="res://player/state_machine/jumping_state.gd" id="4_fr13y"]
-[ext_resource type="Script" uid="uid://odam5swb7u3x" path="res://player/state_machine/falling_state.gd" id="4_ynvve"]
+[ext_resource type="Script" uid="uid://bxkowni5n5qeh" path="res://common/state_machine/state.gd" id="3_yw30f"]
 [ext_resource type="Script" uid="uid://cw2knxh8u7elo" path="res://addons/modular-settings-menu/scripts/settings-handler-scripts/camera_settings_handler.gd" id="6_g6k8r"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_is63v"]
@@ -13,6 +11,109 @@
 points = PackedVector3Array(-0.125207, -0.532801, -0.480507, 0.0227831, 0.47607, 0.498884, 0.169713, 0.559144, 0.464172, 0.231051, -0.803591, 0.320455, 0.40741, 0.651043, -0.243523, -0.482789, 0.594843, 0.0822132, -0.362868, -0.682312, 0.289697, 0.469044, -0.654529, -0.0662713, -0.127444, 0.842701, -0.338103, -0.393435, -0.683942, -0.244717, 0.438255, 0.623309, 0.200849, 0.0841477, 0.977454, 0.114795, -0.0682023, -0.976458, -0.12927, 0.20055, -0.563129, -0.451454, -0.185527, 0.595453, -0.453475, -0.273363, 0.592268, 0.407754, -0.00693649, -0.476823, 0.49966, 0.375821, -0.588614, 0.316955, 0.111579, 0.563059, -0.481177, -0.41725, 0.527866, -0.270497, -0.484546, -0.596972, -0.0665097, -0.279747, 0.908561, 0.0533361, -0.250197, -0.880712, 0.205319, 0.263647, -0.902771, -0.127394, 0.293368, 0.871526, -0.157196, 0.373412, -0.526319, -0.328246, 0.499663, 0.476641, -0.00688856, 0.0531056, 0.875001, 0.324703, -0.154543, -0.590854, 0.465879, -0.0972799, -0.782358, -0.398188, -0.387649, -0.498171, 0.31565, -0.30068, -0.587995, -0.388901)
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_g6k8r"]
+
+[sub_resource type="GDScript" id="GDScript_g6k8r"]
+resource_name = "grounded_state"
+script/source = "extends State
+
+@export var jumping_state : State
+@export var falling_state : State
+
+func enter(_previous_state : State = null) -> void:
+	super()
+	%LandSpeedLossTimer.start()
+
+func _physics_process(_delta: float) -> void:
+	if not owner.is_on_floor():
+		emit_signal(\"state_changed\", falling_state)
+
+	if Input.is_action_just_pressed(\"jump\") or (owner.jump_buffered and Input.is_action_pressed(\"jump\")):
+		emit_signal(\"state_changed\", jumping_state)
+		owner.jump_buffered = false
+"
+
+[sub_resource type="GDScript" id="GDScript_yw30f"]
+resource_name = "jumping_state"
+script/source = "extends State
+
+@warning_ignore(\"unused_signal\")
+signal jump_cut
+
+@export var grounded_state : State
+@export var falling_state : State
+
+@onready var jump_velocity : float = (2.0 * owner.jump_height) / owner.peak_time_sec
+@onready var grav : float = (-2.0 * owner.jump_height) / (owner.peak_time_sec ** 2)
+
+func enter(_previous_state : State = null) -> void:
+	super()
+	owner.velocity.y = jump_velocity
+	owner.lose_speed_on_ground = false
+
+
+func _physics_process(delta: float) -> void:
+	owner.velocity.y += grav * delta
+	if owner.is_on_floor():
+		emit_signal(\"state_changed\", grounded_state)
+	if owner.velocity.y <= 0:
+		emit_signal(\"state_changed\", falling_state)
+	if Input.is_action_just_released(\"jump\"):
+		owner.velocity.y -= 4
+		emit_signal(\"jump_cut\")
+		emit_signal(\"state_changed\", falling_state)
+"
+
+[sub_resource type="GDScript" id="GDScript_qjkh3"]
+resource_name = "falling_state"
+script/source = "extends State
+
+@export var jumping_state : State
+@export var grounded_state : State
+
+@onready var coyote_timer: Timer = %CoyoteTimer
+@onready var hang_timer: Timer = %HangTimer
+@onready var grav : float = (-2.0 * owner.jump_height) / (owner.fall_time_sec ** 2)
+
+var jump_cut : bool = false
+
+func enter(previous_state : State = null) -> void:
+	super()
+	if previous_state == grounded_state:
+		coyote_timer.start()
+	if previous_state == jumping_state and not jump_cut:
+		hang_timer.start()
+	jump_cut = false
+	owner.lose_speed_on_ground = false
+
+
+func exit() -> void:
+	super()
+	if not hang_timer.is_stopped():
+		hang_timer.stop()
+
+func _physics_process(delta: float) -> void:
+	owner.velocity.y += grav * delta * _get_grav_mult()
+
+	if Input.is_action_just_pressed(\"jump\"):
+		if not coyote_timer.is_stopped():
+			emit_signal(\"state_changed\", jumping_state)
+		else:
+			owner.jump_buffered = true
+
+	if Input.is_action_just_released(\"jump\"):
+		owner.jump_buffered = false
+
+	if owner.is_on_floor():
+		emit_signal(\"state_changed\", grounded_state)
+
+
+func _get_grav_mult() -> float:
+	return (owner.hang_grav_mult if not hang_timer.is_stopped() else 1.0)
+
+
+func _on_jump_cut() -> void:
+	jump_cut = true
+"
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 2
@@ -64,24 +165,32 @@ unique_name_in_owner = true
 wait_time = 0.2
 one_shot = true
 
+[node name="LandSpeedLossTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.05
+one_shot = true
+
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("default_state")]
 script = ExtResource("2_jafdf")
 default_state = NodePath("Grounded")
 
 [node name="Grounded" type="Node" parent="StateMachine" node_paths=PackedStringArray("jumping_state", "falling_state")]
-script = ExtResource("3_mujy3")
+script = SubResource("GDScript_g6k8r")
 jumping_state = NodePath("../Jumping")
 falling_state = NodePath("../Falling")
+metadata/_custom_type_script = ExtResource("3_yw30f")
 
 [node name="Jumping" type="Node" parent="StateMachine" node_paths=PackedStringArray("grounded_state", "falling_state")]
-script = ExtResource("4_fr13y")
+script = SubResource("GDScript_yw30f")
 grounded_state = NodePath("../Grounded")
 falling_state = NodePath("../Falling")
+metadata/_custom_type_script = ExtResource("3_yw30f")
 
 [node name="Falling" type="Node" parent="StateMachine" node_paths=PackedStringArray("jumping_state", "grounded_state")]
-script = ExtResource("4_ynvve")
+script = SubResource("GDScript_qjkh3")
 jumping_state = NodePath("../Jumping")
 grounded_state = NodePath("../Grounded")
+metadata/_custom_type_script = ExtResource("3_yw30f")
 
 [node name="CameraSettingsHandler" type="Node" parent="." node_paths=PackedStringArray("CameraRef")]
 script = ExtResource("6_g6k8r")
@@ -89,6 +198,7 @@ CameraRef = NodePath("../Camera")
 
 [connection signal="timeout" from="RunTimer" to="." method="_on_run_timer_timeout"]
 [connection signal="timeout" from="StopRunTimer" to="." method="_on_stop_run_timer_timeout"]
+[connection signal="timeout" from="LandSpeedLossTimer" to="." method="_on_land_speed_loss"]
 [connection signal="state_changed" from="StateMachine/Grounded" to="StateMachine" method="_change_state"]
 [connection signal="jump_cut" from="StateMachine/Jumping" to="StateMachine/Falling" method="_on_jump_cut"]
 [connection signal="state_changed" from="StateMachine/Jumping" to="StateMachine" method="_change_state"]
