@@ -79,10 +79,10 @@ func _physics_process(delta: float) -> void:
 
 	horizontal_vel = Vector2(velocity.x, velocity.z)
 
-	if horizontal_vel.length_squared() >= _get_final_speed() ** 2: # squared because more performant
-		if not horizontal_vel.normalized() == move_dir:
-			velocity.x = Vector2(horizontal_vel.length() * move_dir).x
-			velocity.z = Vector2(horizontal_vel.length() * move_dir).y
+	#if horizontal_vel.length_squared() >= _get_final_speed() ** 2: # squared because more performant
+	if not horizontal_vel.normalized() == move_dir:
+		velocity.x = Vector2(horizontal_vel.length() * move_dir).x
+		velocity.z = Vector2(horizontal_vel.length() * move_dir).y
 
 
 	camera.rotation.x -= camera_input_dir.y * delta\

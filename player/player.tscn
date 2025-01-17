@@ -19,16 +19,6 @@ script/source = "extends State
 @export var jumping_state : State
 @export var falling_state : State
 
-func enter(_previous_state : State = null) -> void:
-	super()
-	if owner.horizontal_vel.length_squared() > owner._get_final_speed() ** 2:
-		owner.velocity.x = lerpf(owner.velocity.x,
-				owner._get_final_speed() * owner._get_move_dir().x, 0.1
-				)
-		owner.velocity.z = lerpf(owner.velocity.z,
-				owner._get_final_speed() * owner._get_move_dir().y, 0.1
-				)
-
 
 func _physics_process(_delta: float) -> void:
 	if not owner.is_on_floor():
