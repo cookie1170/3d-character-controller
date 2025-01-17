@@ -34,7 +34,6 @@ class_name Player
 var camera_input_dir := Vector2.ZERO
 var jump_buffered : bool
 var running : bool = false
-var lose_speed_on_ground : bool = true
 var horizontal_vel := Vector2.ZERO
 
 
@@ -55,12 +54,14 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	var move_dir = _get_move_dir()
+	var move_dir : Vector2 = _get_move_dir()
 
 	if move_dir:
-		if horizontal_vel.length_squared() < _get_final_speed() ** 2\
-		 or (is_on_floor() and lose_speed_on_ground):
-			horizontal_vel = horizontal_vel.move_toward(move_dir * _get_final_speed(),\
+		if int(horizontal_vel.length()) in range(_get_final_speed() + 1)\
+		or is_on_floor():
+			velocity.x = move_toward(velocity.x, move_dir.x * _get_final_speed(),\
+		 	accel * delta)
+			velocity.z = move_toward(velocity.z, move_dir.y * _get_final_speed(),\
 		 	accel * delta)
 		if run_timer.is_stopped() and not running and not _is_slowed_down():
 			run_timer.start()
@@ -70,18 +71,20 @@ func _physics_process(delta: float) -> void:
 			stop_run_timer.stop()
 
 	else:
-		horizontal_vel = horizontal_vel.move_toward(Vector2.ZERO, decel * delta)
+		velocity.x = move_toward(velocity.x, 0.0, decel * delta)
+		velocity.z = move_toward(velocity.z, 0.0, decel * delta)
 		run_timer.stop()
 		if stop_run_timer.is_stopped():
 			stop_run_timer.start()
-		
+
+	horizontal_vel = Vector2(velocity.x, velocity.z)
 
 	if horizontal_vel.length_squared() >= _get_final_speed() ** 2: # squared because more performant
 		if not horizontal_vel.normalized() == move_dir:
-			horizontal_vel = horizontal_vel.length() * move_dir
+			velocity.x = Vector2(horizontal_vel.length() * move_dir).x
+			velocity.z = Vector2(horizontal_vel.length() * move_dir).y
 
-	velocity.x = horizontal_vel.x
-	velocity.z = horizontal_vel.y
+
 	camera.rotation.x -= camera_input_dir.y * delta\
 	 * (-1.0 if invert_y else 1.0)
 	camera.rotation.x = clampf(camera.rotation.x, 
@@ -89,12 +92,13 @@ func _physics_process(delta: float) -> void:
 	)
 	camera.rotation.y -= camera_input_dir.x * delta
 	camera_input_dir = Vector2.ZERO
+	
 	if Input.is_action_just_pressed("focus_click"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	if Input.is_action_just_pressed("boost_temp"):
-		horizontal_vel += Vector2(40, 40) * Vector2(move_dir.x, move_dir.y)
-		velocity.y = 40
-	print(snappedf(horizontal_vel.length(), 0.05))
+		velocity += Vector3(40 * move_dir.x, 40, 40 * move_dir.y)
+
+
 	move_and_slide()
 
 
@@ -129,7 +133,3 @@ func _on_run_timer_timeout() -> void:
 func _on_stop_run_timer_timeout() -> void:
 	running = false
 	get_tree().create_tween().tween_property(camera, "fov", walking_fov, 0.25)
-
-
-func _on_land_speed_loss() -> void:
-	lose_speed_on_ground = true

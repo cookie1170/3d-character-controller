@@ -21,6 +21,7 @@ script/source = "extends State
 
 func enter(_previous_state : State = null) -> void:
 	super()
+	%LandSpeedLossTimer.start()
 	if owner.horizontal_vel.length_squared() > owner._get_final_speed() ** 2:
 		owner.velocity.x = lerpf(owner.velocity.x,
 				owner._get_final_speed() * owner._get_move_dir().x, 0.1
@@ -55,6 +56,7 @@ signal jump_cut
 func enter(_previous_state : State = null) -> void:
 	super()
 	owner.velocity.y = jump_velocity
+	owner.lose_speed_on_ground = false
 
 
 func _physics_process(delta: float) -> void:
@@ -89,6 +91,7 @@ func enter(previous_state : State = null) -> void:
 	if previous_state == jumping_state and not jump_cut:
 		hang_timer.start()
 	jump_cut = false
+	owner.lose_speed_on_ground = false
 
 
 func exit() -> void:
@@ -134,8 +137,8 @@ terminal_velocity = 16.0
 move_speed = 10.0
 running_speed = 16.0
 run_delay = 0.5
-accel_time_sec = 0.1
-decel_time_sec = 0.1
+accel_time_sec = 0.2
+decel_time_sec = 0.2
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -170,6 +173,11 @@ unique_name_in_owner = true
 wait_time = 0.2
 one_shot = true
 
+[node name="LandSpeedLossTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.05
+one_shot = true
+
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("default_state")]
 script = ExtResource("2_jafdf")
 default_state = NodePath("Grounded")
@@ -198,6 +206,7 @@ CameraRef = NodePath("../Camera")
 
 [connection signal="timeout" from="RunTimer" to="." method="_on_run_timer_timeout"]
 [connection signal="timeout" from="StopRunTimer" to="." method="_on_stop_run_timer_timeout"]
+[connection signal="timeout" from="LandSpeedLossTimer" to="." method="_on_land_speed_loss"]
 [connection signal="state_changed" from="StateMachine/Grounded" to="StateMachine" method="_change_state"]
 [connection signal="jump_cut" from="StateMachine/Jumping" to="StateMachine/Falling" method="_on_jump_cut"]
 [connection signal="state_changed" from="StateMachine/Jumping" to="StateMachine" method="_change_state"]

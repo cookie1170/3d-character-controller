@@ -170,3 +170,4 @@ ACTION_LIST_ = Dictionary[String, String]({
 "right": "Right"
 })
 ElementPanelScene = ExtResource("1_6pc66")
+metadata/_edit_use_anchors_ = true
